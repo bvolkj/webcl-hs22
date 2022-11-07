@@ -1,0 +1,28 @@
+<div class="controls">
+  <label for="progress">Progress: {{progress}}</label>
+  <input id="progress" type="range" [(ngModel)]="progress">
+
+  <label for="threshold">Threshold: {{threshold}}</label>
+  <input id="threshold" type="range" [(ngModel)]="threshold">
+
+  <label for="showHandle">Show Handle: {{showHandle ? "YES": "NO"}}</label>
+  <input id="showHandle" type="checkbox" [(ngModel)]="showHandle">
+
+  <label for="style">Style: {{style}}</label>
+  <select id="style" [(ngModel)]="style">
+    <option *ngFor="let c of allStyles | keyvalue" [ngValue]="c.value">{{c.key}}</option>
+  </select>
+
+  <label for="gagues">Gagues: {{gagues}}</label>
+  <input id="gagues" type="range" min="1" max="10" [(ngModel)]="gagues">
+
+
+
+
+</div>
+
+<app-gauge-clean *ngFor="let n of sequence(gagues)"
+                 [(progress)]="progress"
+                 [showHandle]="showHandle"
+                 [threshold]="threshold"
+                 [style]="style"></app-gauge-clean>

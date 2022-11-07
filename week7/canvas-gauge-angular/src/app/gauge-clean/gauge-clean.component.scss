@@ -1,0 +1,19 @@
+canvas {
+  margin: 0.1em 1em 0 1em;
+}
+
+.classic {
+  --section-one-color: red;
+  --section-two-color: green;
+  --progress-color:    rgba(116,160,194,0.5);
+}
+.citrus {
+  --section-one-color: orange;
+  --section-two-color: lightgreen;
+  --progress-color:    rgba(255,0,0,0.2);
+}
+.elegant {
+  --section-one-color: darkgrey;
+  --section-two-color: grey;
+  --progress-color:    rgba(0,0,0,0.2);
+}

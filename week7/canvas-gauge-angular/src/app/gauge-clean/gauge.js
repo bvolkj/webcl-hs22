@@ -1,6 +1,7 @@
 // Using only function scope. No "class", "new", or "this".
 
-export function progressPie(canvas, progressFraction, showThumb) {
+//dividerFraction can be set programmatically instead of using css custom properties
+export function progressPie(canvas, progressFraction, showThumb, dividerFraction) {
     const centerx   = canvas.width  / 2;
     const centery   = canvas.height / 2;
     const radius    = Math.min(centerx, centery);
@@ -53,9 +54,8 @@ export function progressPie(canvas, progressFraction, showThumb) {
     function paint() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
         // background arcs
-        const divider = Number(getCSS("--section-divider"));
-        pieSlice(0, divider, radius, gradient(radius, getCSS("--section-one-color")));
-        pieSlice(divider, 1, radius, gradient(radius, getCSS("--section-two-color")));
+        pieSlice(0, dividerFraction, radius, gradient(radius, getCSS("--section-one-color")));
+        pieSlice(dividerFraction, 1, radius, gradient(radius, getCSS("--section-two-color")));
 
         // progress arc
         pieSlice(0, progressFraction, radius * 0.9, getCSS("--progress-color"));
@@ -84,13 +84,11 @@ const valueFromEvent = (progressView, evt) => {
     return (val > 1) ? val -1 : val;
 };
 
-//callback would be nice
-export const registerForMouseAndTouch = progressView => {
+export const registerForMouseAndTouch = (progressView, callback) => {
 
-    const track = evt => {
-        range.value = valueFromEvent(progressView, evt) * 100;// normalize for view data
-        repaint();
-    };
+    //caller can provide its own callback
+    const track = evt => callback(valueFromEvent(progressView, evt) * 100);// normalize for view data
+
 
     const consume = evt => {                    // prevent click, focus, drag, and selection events
         evt.preventDefault();
